@@ -13,8 +13,6 @@ except ImportError:
 OUTPUT_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "magnet_out.txt")
 torrent_files = glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "*.torrent"))
 
-print(f"Найдено файлов: {len(torrent_files)}")
-
 to_magnet = lambda path: (
     lambda data: (
         lambda info, info_hash, name, trackers:
@@ -35,11 +33,7 @@ to_magnet = lambda path: (
 
 magnets = list(map(to_magnet, torrent_files))
 
-print("\n".join(magnets))
-
 open(OUTPUT_FILE, "w", encoding="utf-8").write("\n".join(magnets) + "\n")
-
-print(f"\nСохранено в {OUTPUT_FILE} ({len(magnets)} шт.)")
 
 delete_file = lambda path: (
     os.remove(path) or print(f"Удалён: {os.path.basename(path)}")
